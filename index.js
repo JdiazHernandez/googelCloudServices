@@ -5,6 +5,7 @@ const Firestore = require('@google-cloud/firestore');
 const firestore = new Firestore({
     projectId: 'firestoredbtest-f77b4',
     keyFilename: './firestoredbtest-f77b4-062354229091.json',
+    timestampsInSnapshots: true,
   });
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly','https://www.googleapis.com/auth/datastore'];
@@ -69,17 +70,18 @@ function getNewToken(oAuth2Client, callback) {
     });
   });
 }
-const dataArray = [];
+
 /**
  * Prints the names and majors of students in a sample spreadsheet:
  * @see https://docs.google.com/spreadsheets/d/14yj1BzQCETE02T7dncwYRfz7bvhXrLVxfhJkOqhim7o/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 function retrieveData(auth) {
+  const dataArray = [];
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
     spreadsheetId: '14yj1BzQCETE02T7dncwYRfz7bvhXrLVxfhJkOqhim7o',
-    range: 'A2:G',
+    range: 'A1:G',
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
@@ -87,14 +89,15 @@ function retrieveData(auth) {
       console.log('Values Column Values Column ')
       // Print columns A and E, which correspond to indices 0 and 4.
       rows.map((row) => {
-        console.log(`${row[0]}, ${row[4]}`);
-        dataArray.push(`${row[0]}, ${row[4]}`)
+        console.log(`${row[1]}, ${row[5]}`);
+        dataArray.push(`${row[1]}, ${row[5]}`)
       });
       
     } else {
       console.log('No data found.');
     }
     document.add(Object.assign({},dataArray))
+    console.log(Object.assign({},dataArray))
   });
 }
 
