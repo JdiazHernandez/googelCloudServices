@@ -88,7 +88,7 @@ function getNewToken(oAuth2Client, callback) {
 
 /**
  * Prints the the selected rows into the a FireStore from the Google Sheet:
- * @see https://docs.google.com/spreadsheets/d/14yj1BzQCETE02T7dncwYRfz7bvhXrLVxfhJkOqhim7o/edit
+ * @see https://docs.google.com/spreadsheets/d/<YOUR_GOOGLE_SHEET_ID>/edit //THIS NEEDS TO BE REGISTERED
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
 
@@ -108,12 +108,14 @@ function retrieveData(auth) {
       // Print columns B and F, which correspond to indices 1 and 5.
       rows.map((row) => {
         console.log(`${row[1]}, ${row[5]}`);
+        //Create an array for with the information form the table
         dataArray.push(`${row[1]}, ${row[5]}`)
       });
       
     } else {
       console.log('No data found.');
     }
+    //Transform and send the array as an object to Firebase
     document.add(Object.assign({},dataArray))
     console.log(Object.assign({},dataArray))
   });
