@@ -1,17 +1,32 @@
+/*
+Retrieve from Google Sheets and send to Firestore Node app
+
+Is require the credencias.json from the firebase project, and the api key form Google Cloud for Google sheets
+
+*/
+
+//Modules require to start the node
+
 const fs = require('fs');
 const readline = require('readline');
 const {google} = require('googleapis');
 const Firestore = require('@google-cloud/firestore');
+
+//Start of firebase apps
+
 const firestore = new Firestore({
     projectId: 'function-sheets-to-firestore',
     keyFilename: './function-sheets-to-firestore-ceb591985491.json',
-    timestampsInSnapshots: true,
+    timestampsInSnapshots: true, //This is needed for firebase
   });
+
 // If modifying these scopes, delete token.json.
 const SCOPES = ['https://www.googleapis.com/auth/spreadsheets.readonly','https://www.googleapis.com/auth/datastore'];
+
 // The file token.json stores the user's access and refresh tokens, and is
 // created automatically when the authorization flow completes for the first
 // time.
+
 const TOKEN_PATH = 'token.json';
 
 // Load client secrets from a local file.
@@ -72,10 +87,13 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the the selected rows into the a FireStore NoSQL db:
+ * Prints the the selected rows into the a FireStore from the Google Sheet:
  * @see https://docs.google.com/spreadsheets/d/14yj1BzQCETE02T7dncwYRfz7bvhXrLVxfhJkOqhim7o/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
+
+ //Function to retrieve data from GSheet and Arrange it as an accepted object for Firestore
+
 function retrieveData(auth) {
   const dataArray = [];
   const sheets = google.sheets({version: 'v4', auth});
@@ -86,8 +104,8 @@ function retrieveData(auth) {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
     if (rows.length) {
-      console.log('Values Column Values Column ')
-      // Print columns A and E, which correspond to indices 0 and 4.
+      console.log('Values first raw selected, Values second raw selected ')
+      // Print columns B and F, which correspond to indices 1 and 5.
       rows.map((row) => {
         console.log(`${row[1]}, ${row[5]}`);
         dataArray.push(`${row[1]}, ${row[5]}`)
