@@ -3,8 +3,8 @@ const readline = require('readline');
 const {google} = require('googleapis');
 const Firestore = require('@google-cloud/firestore');
 const firestore = new Firestore({
-    projectId: 'firestoredbtest-f77b4',
-    keyFilename: './firestoredbtest-f77b4-062354229091.json',
+    projectId: 'function-sheets-to-firestore',
+    keyFilename: './function-sheets-to-firestore-ceb591985491.json',
     timestampsInSnapshots: true,
   });
 // If modifying these scopes, delete token.json.
@@ -39,7 +39,7 @@ function authorize(credentials, callback) {
     callback(oAuth2Client);
   });
 }
-const document = firestore.collection('sample4');
+const document = firestore.collection('CreatedByNode');
 /**
  * Get and store new token after prompting for user authorization, and then
  * execute the given callback with the authorized OAuth2 client.
@@ -72,7 +72,7 @@ function getNewToken(oAuth2Client, callback) {
 }
 
 /**
- * Prints the names and majors of students in a sample spreadsheet:
+ * Prints the the selected rows into the a FireStore NoSQL db:
  * @see https://docs.google.com/spreadsheets/d/14yj1BzQCETE02T7dncwYRfz7bvhXrLVxfhJkOqhim7o/edit
  * @param {google.auth.OAuth2} auth The authenticated Google OAuth client.
  */
