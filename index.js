@@ -95,15 +95,20 @@ function getNewToken(oAuth2Client, callback) {
  //Function to retrieve data from GSheet and Arrange it as an accepted object for Firestore
 
 function retrieveData(auth) {
+
   const dataArray = [];
   const sheets = google.sheets({version: 'v4', auth});
+
   sheets.spreadsheets.values.get({
     spreadsheetId: '<GOOGLE SHEET ID>',//The long key on the url from google sheets
     range: 'A1:G', //rows to select
   }, (err, res) => {
+
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
+
     if (rows.length) {
+      
       console.log('Values first raw selected, Values second raw selected ')
       // Print columns B and F, which correspond to indices 1 and 5.
       rows.map((row) => {
@@ -113,6 +118,7 @@ function retrieveData(auth) {
       });
       
     } else {
+
       console.log('No data found.');
     }
     //Transform and send the array as an object to Firebase
