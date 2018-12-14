@@ -15,8 +15,8 @@ const Firestore = require('@google-cloud/firestore');
 //Start of firebase apps
 
 const firestore = new Firestore({
-    projectId: 'function-sheets-to-firestore',
-    keyFilename: './function-sheets-to-firestore-ceb591985491.json',
+    projectId: 'FIRESTORE PROJECT ID',//<-THIS NEEDS AN ID
+    keyFilename: './PATH TO THE SERVICE CREDENCIALS.JSON',//<-DOWNLOAD FORM FIREBASE PROJECT CONSOLE
     timestampsInSnapshots: true, //This is needed for firebase
   });
 
@@ -98,8 +98,8 @@ function retrieveData(auth) {
   const dataArray = [];
   const sheets = google.sheets({version: 'v4', auth});
   sheets.spreadsheets.values.get({
-    spreadsheetId: '14yj1BzQCETE02T7dncwYRfz7bvhXrLVxfhJkOqhim7o',
-    range: 'A1:G',
+    spreadsheetId: '<GOOGLE SHEET ID>',//The long key on the url from google sheets
+    range: 'A1:G', //rows to select
   }, (err, res) => {
     if (err) return console.log('The API returned an error: ' + err);
     const rows = res.data.values;
